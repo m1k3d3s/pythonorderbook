@@ -3,6 +3,7 @@ from Tkinter import *
 from bs4 import BeautifulSoup
 import urllib2
 import collections
+import time
 
 
 def getMarketData():
@@ -14,12 +15,12 @@ def getMarketData():
     if stock == "":
         equity.insert(0, "PG")
         stock = "PG"
-        top.title("PG")
+        top.title(time.asctime( time.localtime(time.time())))
     url = "http://finance.yahoo.com/q/ecn?s="+stock+"+Order+Book";
     response = urllib2.urlopen(url)
     html = response.read()
     soup = BeautifulSoup(html)
-    top.title(stock)
+    top.title(time.asctime( time.localtime(time.time())))
     tables = soup.findAll("table")
     try:
         table = tables[1]
