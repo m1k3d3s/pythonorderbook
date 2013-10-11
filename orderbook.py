@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import urllib2
 import collections
 import time
+import re
 
 
 def getMarketData():
