@@ -20,7 +20,11 @@ def getMarketData():
     response = urllib2.urlopen(url)
     html = response.read()
     soup = BeautifulSoup(html)
-    top.title(time.asctime( time.localtime(time.time())))
+    companyname = soup.find_all(re.compile("h2"))
+    top.title(companyname[2].string) #in the list of h2 tags companyname is 3rd one
+    localtime = time.asctime( time.localtime(time.time()))
+    texttime.delete(0,30) #clear textfield
+    texttime.insert(INSERT, localtime)
     tables = soup.findAll("table")
     try:
         table = tables[1]
@@ -57,6 +61,7 @@ def getMarketData():
 
 top = Tkinter.Tk()
 equity = Entry(top, width=5)
+texttime = Entry(top, width=25, background = 'black', foreground = 'red')
 refresh = Button(top, text="Refresh", command=getMarketData)
 textbid=Text(top, width=20, height=20, background ='black', foreground='green')
 textask=Text(top, width=20, height=20, background ='black', foreground='green')
