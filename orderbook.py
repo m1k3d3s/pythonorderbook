@@ -60,6 +60,9 @@ def getMarketData():
     textbid.config(state=DISABLED)
     textask.config(state=DISABLED)
 
+def get_stock_summary():
+    
+
 top = Tkinter.Tk()
 equity = Entry(top, width=5)
 texttime = Entry(top, width=25, background = 'black', foreground = 'red')
