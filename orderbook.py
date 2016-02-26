@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import Tkinter
 from Tkinter import *
 from bs4 import BeautifulSoup
@@ -6,7 +8,6 @@ import collections
 import time
 import re
 
-
 def getMarketData():
     textbid.config(state=NORMAL)
     textask.config(state=NORMAL)
@@ -14,19 +15,22 @@ def getMarketData():
     textask.delete(1.0,END)
     stock = equity.get()
     if stock == "":
-        equity.insert(0, "PG")
-        stock = "PG"
-        top.title(time.asctime( time.localtime(time.time())))
+        equity.insert(0, "GOOG")    
+        stock = "GOOG"
     url = "http://finance.yahoo.com/q/ecn?s="+stock+"+Order+Book";
     response = urllib2.urlopen(url)
     html = response.read()
     soup = BeautifulSoup(html)
+    #print(soup)
     companyname = soup.find_all(re.compile("h2"))
     top.title(companyname[2].string) #in the list of h2 tags companyname is 3rd one
     localtime = time.asctime( time.localtime(time.time()))
-    texttime.delete(0,30) #clear textfield
-    texttime.insert(INSERT, localtime)
+    textlt.delete(0,30)
+    texttime.delete(0,30)
+    texttime.insert(INSERT,localtime)
     tables = soup.findAll("table")
+    #for i in tables:
+    #    print i
     try:
         table = tables[1]
     except IndexError:
@@ -57,19 +61,36 @@ def getMarketData():
             textask.insert(END,asksize.strip())
             textask.insert(INSERT,"\n")
             textask.focus_set()
+    
+    try:
+        table_lt = tables[3]
+    except IndexError:
+        table_lt = 'null'
+    rows = table_lt.findAll('tr')
+    for row in rows:
+        ltrade = row.findAll('td', {'class':'yfi_last_trade'})
+        if(not len(ltrade)==0):
+            #print str(ltrade).strip('[]')
+            value = row.text
+            textlt.insert(INSERT,value)
+
+    
     textbid.config(state=DISABLED)
     textask.config(state=DISABLED)
+    #<td class="yfnc_tabledata1 yfi_last_trade"><span id="yfs_l90_drys">0.10</span></td></tr>
+    #lasttrade = soup.find_all(table,id="table1")
+    #print lasttrade
 
-def get_stock_summary():
-    
 
 top = Tkinter.Tk()
 equity = Entry(top, width=5)
-texttime = Entry(top, width=25, background = 'black', foreground = 'red')
+textlt=Entry(top, width=25,background='black',foreground='red')
+texttime=Entry(top, width=25, background ='black', foreground='red')
 refresh = Button(top, text="Refresh", command=getMarketData)
 textbid=Text(top, width=20, height=20, background ='black', foreground='green')
 textask=Text(top, width=20, height=20, background ='black', foreground='green')
 equity.pack()
+textlt.pack()
 texttime.pack()
 refresh.pack()
 textbid.pack(side=LEFT)
