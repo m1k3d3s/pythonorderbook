@@ -8,6 +8,9 @@ import collections
 import time
 import re
 
+def autocapitalize(event):
+    stock.set(stock.get().upper())
+
 def getMarketData():
     textbid.config(state=NORMAL)
     textask.config(state=NORMAL)
@@ -35,6 +38,9 @@ def getMarketData():
         table = tables[1]
     except IndexError:
         table = 'null'
+        textlt.insert(INSERT,"N/A")
+        textbid.insert(INSERT,"N/A")
+        textask.insert(INSERT,"N/A")
     rows = table.findAll("tr")
     for row in rows:
         tds = row.findAll('td')
@@ -50,6 +56,9 @@ def getMarketData():
         table_a = tables[2]
     except IndexError:
         table_a = 'null'
+        textlt.insert(INSERT,"N/A")
+        textbid.insert(INSERT,"N/A")
+        textask.insert(INSERT,"N/A")
     rows = table_a.findAll("tr")
     for row in rows:
         tdsa = row.findAll('td')
@@ -66,6 +75,9 @@ def getMarketData():
         table_lt = tables[3]
     except IndexError:
         table_lt = 'null'
+        textlt.insert(INSERT,"N/A")
+        textask.insert(INSERT,"N/A")
+        textbid.insert(INSERT,"N/A")
     rows = table_lt.findAll('tr')
     for row in rows:
         ltrade = row.findAll('td', {'class':'yfi_last_trade'})
@@ -83,13 +95,15 @@ def getMarketData():
 
 
 top = Tkinter.Tk()
-equity = Entry(top, width=5)
+stock = StringVar()
+equity = Entry(top, width=5, textvariable=stock)
 textlt=Entry(top, width=25,background='black',foreground='red')
 texttime=Entry(top, width=25, background ='black', foreground='red')
 refresh = Button(top, text="Refresh", command=getMarketData)
 textbid=Text(top, width=20, height=20, background ='black', foreground='green')
 textask=Text(top, width=20, height=20, background ='black', foreground='green')
 equity.pack()
+equity.bind("<KeyRelease>",autocapitalize)
 textlt.pack()
 texttime.pack()
 refresh.pack()
