@@ -11,6 +11,17 @@ import re
 def autocapitalize(event):
     stock.set(stock.get().upper())
 
+def check_updown(price,old_price):
+    if price > old_price:
+        arrow = u"\u2191"
+    elif price == old_price:
+        arrow = ""
+    else:
+        arrow = u"\u2193"
+    return arrow
+
+old_value = 0
+
 def getMarketData():
     textbid.config(state=NORMAL)
     textask.config(state=NORMAL)
@@ -84,8 +95,10 @@ def getMarketData():
         if(not len(ltrade)==0):
             #print str(ltrade).strip('[]')
             value = row.text
-            textlt.insert(INSERT,value)
-
+            global old_value
+            arrow = check_updown(value,old_value)
+            textlt.insert(INSERT,value+" "+arrow)
+            old_value = value
     
     textbid.config(state=DISABLED)
     textask.config(state=DISABLED)
