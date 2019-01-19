@@ -30,6 +30,10 @@ def check_updown(price,old_price):
 old_value = 0
 
 def getMarketData():
+    textbid.config(state=NORMAL)
+    textask.config(state=NORMAL)
+    textbid.delete(1.0,END)
+    textask.delete(1.0,END)
     request_symbols = []
     btc_book = {}
     base_url = "https://api.sandbox.gemini.com/v1/symbols"
@@ -45,16 +49,15 @@ def getMarketData():
     print("BIDs -------------------------")
     for x in btc_book['bids']:
         bids.append(x)
-    #print(bids)
-    print([x.items() for x in bids])
+    print(bids[0]['price'])
+    textbid.insert(INSERT,bids[0]['price'].strip())
 
     i = 0
     asks = []
     print("ASKs -------------------------")
     for x in btc_book['asks']:
         asks.append(x)
-    #print(asks)
-    print([x.items() for x in asks])
+    print(asks)
    # i = 0
    # asks = []
    # print("ASKs -------------------------")
