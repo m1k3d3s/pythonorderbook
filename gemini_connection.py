@@ -9,6 +9,7 @@ import certifi
 import collections
 import time
 import re
+import time
 
 
 http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where())
@@ -33,10 +34,10 @@ def getMarketData():
     localtime = time.asctime( time.localtime(time.time()))
     texttime.delete(0,30)
     texttime.insert(INSERT,localtime)
-    textlt.config(state=NORMAL)
+    textspread.config(state=NORMAL)
     textbid.config(state=NORMAL)
     textask.config(state=NORMAL)
-    textlt.delete(0,END)
+    textspread.delete(0,END)
     textbid.delete(1.0,END)
     textask.delete(1.0,END)
     request_symbols = []
@@ -73,9 +74,8 @@ def getMarketData():
         i += 1
 
     spread = float(asks[0]['price']) - float(bids[0]['price'])
-    textlt.insert(INSERT, spread)
-    print(spread)
-
+    textspread.insert(INSERT, spread)
+    #print(spread)
 
 def getAllBooks(list):
     for x in list:
@@ -86,20 +86,21 @@ def getAllBooks(list):
     return symbol_obj
 
 
-
-top = tkinter.Tk()
-crypto = StringVar()
-equity = Entry(top, width=5, textvariable=crypto)
-textlt=Entry(top, width=25,background='black',foreground='red')
-texttime=Entry(top, width=25, background ='black', foreground='red')
-refresh = Button(top, text="Refresh", command=getMarketData)
-textbid=Text(top, width=60, height=60, background ='black', foreground='green')
-textask=Text(top, width=60, height=60, background ='black', foreground='red')
-equity.pack()
-equity.bind("<KeyRelease>",autocapitalize)
-textlt.pack()
-texttime.pack()
-refresh.pack()
-textbid.pack(side=LEFT)
-textask.pack(side=RIGHT)
-top.mainloop()
+if __name__=='__main__':
+    top = tkinter.Tk()
+    top.title("Gemini Order Book")
+    crypto = StringVar()
+    equity = Entry(top, width=5, textvariable=crypto)
+    textspread=Entry(top, width=25,background='black',foreground='white')
+    texttime=Entry(top, width=25, background ='black', foreground='red')
+    refresh = Button(top, text="Refresh", command=getMarketData)
+    textbid=Text(top, width=60, height=60, background ='black', foreground='green')
+    textask=Text(top, width=60, height=60, background ='black', foreground='red')
+    equity.pack()
+    equity.bind("<KeyRelease>",autocapitalize)
+    textspread.pack()
+    texttime.pack()
+    refresh.pack()
+    textbid.pack(side=LEFT)
+    textask.pack(side=RIGHT)
+    top.mainloop()
