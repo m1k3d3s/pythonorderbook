@@ -54,7 +54,8 @@ def getMarketData():
         bids.append(x)
     while i < len(bids):
         #textbid.insert(INSERT,bids[i]['price']+"\n")
-        textbid.insert(INSERT,bids[i]['timestamp']+" "+bids[i]['amount']+" "+bids[i]['price']+"\n")
+        #textbid.insert(INSERT,bids[i]['timestamp']+" "+bids[i]['amount']+" "+bids[i]['price']+"\n")
+        textbid.insert(INSERT,"\t\t"+bids[i]['amount']+"\t\t"+bids[i]['price']+"\n")
         i += 1
 
     i = 0
@@ -65,10 +66,12 @@ def getMarketData():
     while i < len(asks):
         #textask.insert(INSERT,asks[i]['price']+"\n")
         #textask.insert(INSERT,asks[i])
-        textask.insert(INSERT,asks[i]['timestamp']+" "+asks[i]['amount']+" "+asks[i]['price']+"\n")
+        #textask.insert(INSERT,asks[i]['timestamp']+" "+asks[i]['amount']+" "+asks[i]['price']+"\n")
+        textask.insert(INSERT,"\t\t"+asks[i]['amount']+"\t\t"+asks[i]['price']+"\n")
         i += 1
 
-
+def getSpread():
+    pass
 
 def getAllBooks(list):
     for x in list:
@@ -86,7 +89,7 @@ textlt=Entry(top, width=25,background='black',foreground='red')
 texttime=Entry(top, width=25, background ='black', foreground='red')
 refresh = Button(top, text="Refresh", command=getMarketData)
 textbid=Text(top, width=60, height=60, background ='black', foreground='green')
-textask=Text(top, width=60, height=60, background ='black', foreground='green')
+textask=Text(top, width=60, height=60, background ='black', foreground='red')
 equity.pack()
 equity.bind("<KeyRelease>",autocapitalize)
 textlt.pack()
