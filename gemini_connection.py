@@ -33,8 +33,10 @@ def getMarketData():
     localtime = time.asctime( time.localtime(time.time()))
     texttime.delete(0,30)
     texttime.insert(INSERT,localtime)
+    textlt.config(state=NORMAL)
     textbid.config(state=NORMAL)
     textask.config(state=NORMAL)
+    textlt.delete(0,END)
     textbid.delete(1.0,END)
     textask.delete(1.0,END)
     request_symbols = []
@@ -49,7 +51,7 @@ def getMarketData():
     #print(btc_book.values())
     i = 0
     bids = []
-    print("BIDs -------------------------")
+    #print("BIDs -------------------------")
     for x in btc_book['bids']:
         bids.append(x)
     while i < len(bids):
@@ -60,7 +62,7 @@ def getMarketData():
 
     i = 0
     asks = []
-    print("ASKs -------------------------")
+    #print("ASKs -------------------------")
     for x in btc_book['asks']:
         asks.append(x)
     while i < len(asks):
@@ -70,8 +72,10 @@ def getMarketData():
         textask.insert(INSERT,"\t\t"+asks[i]['amount']+"\t\t"+asks[i]['price']+"\n")
         i += 1
 
-def getSpread():
-    pass
+    spread = float(asks[0]['price']) - float(bids[0]['price'])
+    textlt.insert(INSERT, spread)
+    print(spread)
+
 
 def getAllBooks(list):
     for x in list:
@@ -80,6 +84,7 @@ def getAllBooks(list):
                 r = (http.request('GET',url).data.decode('utf-8'))
                 symbol_obj = json.loads(r)
     return symbol_obj
+
 
 
 top = tkinter.Tk()
