@@ -62,6 +62,7 @@ def getMarketData():
         #textbid.insert(INSERT,bids[i]['timestamp']+" "+bids[i]['amount']+" "+bids[i]['price']+"\n")
         textbid.insert(INSERT,"\t\t"+bids[i]['amount']+"\t\t"+bids[i]['price']+"\n")
         i += 1
+    textbid.config(state=DISABLED)
 
     i = 0
     asks = []
@@ -71,10 +72,13 @@ def getMarketData():
     while i < 15:     #only want 15 levels here
         textask.insert(INSERT,"\t\t"+asks[i]['amount']+"\t\t"+asks[i]['price']+"\n")
         i += 1
+    textask.config(state=DISABLED)
 
     spread = float(asks[0]['price']) - float(bids[-1]['price'])
     spread_val = "Spread: " + str(spread)
     textspread.insert(INSERT, spread_val)
+    textspread.config(state=DISABLED)
+    texttime.config(state=DISABLED)
     #print(spread)
 
 def getAllBooks(list):
