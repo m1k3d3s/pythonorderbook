@@ -31,13 +31,14 @@ def check_updown(price,old_price):
 old_value = 0
 
 def getMarketData():
+    texttime.config(state=NORMAL)
+    texttime.delete(1.0,END)
     localtime = time.asctime( time.localtime(time.time()))
-    texttime.delete(0,30)
     texttime.insert(INSERT,localtime)
     textspread.config(state=NORMAL)
     textbid.config(state=NORMAL)
     textask.config(state=NORMAL)
-    textspread.delete(0,END)
+    textspread.delete(1.0,END)
     textbid.delete(1.0,END)
     textask.delete(1.0,END)
     request_symbols = []
@@ -96,8 +97,8 @@ if __name__=='__main__':
     top.title("Gemini Order Book")
     mainframe = Frame(top,background='black',borderwidth = 0, relief =FLAT, highlightcolor='black')
     #equity = Entry(top, width=5, textvariable=crypto)
-    textspread=Entry(top, width=30,background='black',foreground='white')
-    texttime=Entry(top, width=30, background ='black', foreground='red')
+    textspread=Text(top, width=30, height=1, background='black',foreground='white')
+    texttime=Text(top, width=30, height=1, background ='black', foreground='red')
     refresh = Button(top, text="Refresh", background = 'black', command=getMarketData)
     textbid=Text(top, width=60, height=15, borderwidth = 0, background ='black', foreground='green')
     textask=Text(top, width=60, height=15, borderwidth = 0, background ='black', foreground='red')
