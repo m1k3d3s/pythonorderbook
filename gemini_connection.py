@@ -55,7 +55,9 @@ def getMarketData():
     #print("BIDs -------------------------")
     for x in btc_book['bids']:
         bids.append(x)
-    while i < len(bids):
+    bids = bids[14::-1]      # reverse the bids to display bottom up
+    #while i < len(bids):
+    while i <= 14:
         #textbid.insert(INSERT,bids[i]['price']+"\n")
         #textbid.insert(INSERT,bids[i]['timestamp']+" "+bids[i]['amount']+" "+bids[i]['price']+"\n")
         textbid.insert(INSERT,"\t\t"+bids[i]['amount']+"\t\t"+bids[i]['price']+"\n")
@@ -66,15 +68,17 @@ def getMarketData():
     #print("ASKs -------------------------")
     for x in btc_book['asks']:
         asks.append(x)
-    while i < len(asks):
+    #while i < len(asks):
+    while i < 15:
         #textask.insert(INSERT,asks[i]['price']+"\n")
         #textask.insert(INSERT,asks[i])
         #textask.insert(INSERT,asks[i]['timestamp']+" "+asks[i]['amount']+" "+asks[i]['price']+"\n")
         textask.insert(INSERT,"\t\t"+asks[i]['amount']+"\t\t"+asks[i]['price']+"\n")
         i += 1
 
-    spread = float(asks[0]['price']) - float(bids[0]['price'])
-    textspread.insert(INSERT, spread)
+    spread = float(asks[0]['price']) - float(bids[-1]['price'])
+    spread_val = "Spread: " + str(spread)
+    textspread.insert(INSERT, spread_val)
     #print(spread)
 
 def getAllBooks(list):
@@ -88,16 +92,16 @@ def getAllBooks(list):
 
 if __name__=='__main__':
     top = tkinter.Tk()
-    top.configure(bg='black')
+    top.configure(bg='black',borderwidth = 0, relief = FLAT, highlightcolor='black')
     top.title("Gemini Order Book")
-    crypto = StringVar()
-    mainframe = Frame(top,background='Black',borderwidth = 1, relief =SUNKEN)
-    equity = Entry(top, width=5, textvariable=crypto)
-    textspread=Entry(top, width=25,background='black',foreground='white')
-    texttime=Entry(top, width=25, background ='black', foreground='red')
-    refresh = Button(top, text="Refresh", command=getMarketData)
-    textbid=Text(top, width=60, height=15, background ='black', foreground='green')
-    textask=Text(top, width=60, height=15, background ='black', foreground='red')
+    #crypto = StringVar()
+    mainframe = Frame(top,background='black',borderwidth = 0, relief =FLAT, highlightcolor='black')
+    #equity = Entry(top, width=5, textvariable=crypto)
+    textspread=Entry(top, width=30,background='black',foreground='white')
+    texttime=Entry(top, width=30, background ='black', foreground='red')
+    refresh = Button(top, text="Refresh", background = 'black', command=getMarketData)
+    textbid=Text(top, width=60, height=15, borderwidth = 0, background ='black', foreground='green')
+    textask=Text(top, width=60, height=15, borderwidth = 0, background ='black', foreground='red')
     #equity.pack()
     #equity.bind("<KeyRelease>",autocapitalize)
     texttime.pack()
