@@ -2,14 +2,20 @@
 
 import urllib3
 import json
-import tkinter
-from tkinter import *
+try:
+    # for Python2
+    from Tkinter import *
+except ImportError:
+    # for Python3
+    from tkinter import *
+    tk=Tk()
 import urllib3.contrib.pyopenssl
 import certifi
 import collections
 import time
 import re
 import time
+from threading import *
 
 
 http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED',ca_certs=certifi.where())
@@ -90,9 +96,13 @@ def getAllBooks(list):
                 symbol_obj = json.loads(r)
     return symbol_obj
 
+def autoGetBook():
+    while(True):
+        getMarketData()
+        time.sleep(5)
 
 if __name__=='__main__':
-    top = tkinter.Tk()
+    top = Tk()
     top.configure(bg='black',borderwidth = 0, relief = FLAT, highlightcolor='black')
     top.title("Gemini Order Book")
     mainframe = Frame(top,background='black',borderwidth = 0, relief =FLAT, highlightcolor='black')
@@ -107,4 +117,7 @@ if __name__=='__main__':
     textbid.pack(side=TOP)
     textspread.pack()
     textask.pack(side=BOTTOM)
+    #t = Timer(5.0, autoGetBook) 
+    #t.start()
     top.mainloop()
+    
