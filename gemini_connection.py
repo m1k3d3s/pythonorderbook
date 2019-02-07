@@ -54,7 +54,7 @@ def getMarketData():
     r = http.request('GET', get_book)
     request_symbols = r_symbols.data.decode('utf-8')
     symbol_obj = json.loads(request_symbols)
-
+    print(symbol_obj)
     btc_book = getAllBooks(symbol_obj)
     #print(btc_book.values())
     i = 0
@@ -102,11 +102,22 @@ def autoGetBook():
         time.sleep(5)
 
 if __name__=='__main__':
+<<<<<<< HEAD
     top = Tk()
+=======
+    base_url = "https://api.gemini.com/v1/symbols"
+    r_symbols = http.request('GET', base_url)
+    pairs = r_symbols.data.decode('utf-8')
+    symbol_obj = json.loads(pairs)
+    pairs_t = tuple(symbol_obj)
+    top = tkinter.Tk()
+>>>>>>> cf6eee42fc0948407c2fa60df01995d397f137cc
     top.configure(bg='black',borderwidth = 0, relief = FLAT, highlightcolor='black')
     top.title("Gemini Order Book")
+    pairs_choice = Spinbox(top, state=NORMAL, values=pairs_t)
     mainframe = Frame(top,background='black',borderwidth = 0, relief =FLAT, highlightcolor='black')
     #equity = Entry(top, width=5, textvariable=crypto)
+    pairs_choice.pack(side=TOP)
     textspread=Text(top, width=30, height=1, background='black',foreground='white')
     texttime=Text(top, width=30, height=1, background ='black', foreground='red')
     refresh = Button(top, text="Refresh", background = 'black', command=getMarketData)
