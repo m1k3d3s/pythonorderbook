@@ -48,19 +48,19 @@ def getMarketData():
     textbid.delete(1.0,END)
     textask.delete(1.0,END)
     request_symbols = []
-    btc_book = {}
+    current_book = {}
     base_url = "https://api.gemini.com/v1/symbols"
     r_symbols = http.request('GET', base_url)
     r = http.request('GET', get_book)
     request_symbols = r_symbols.data.decode('utf-8')
     symbol_obj = json.loads(request_symbols)
     print(symbol_obj)
-    btc_book = getAllBooks(symbol_obj)
-    #print(btc_book.values())
+    current_book = getAllBooks(symbol_obj)
+    #print(current_book.values())
     i = 0
     bids = []
     #print("BIDs -------------------------")
-    for x in btc_book['bids']:
+    for x in current_book['bids']:
         bids.append(x)
     bids = bids[14::-1]      # reverse the bids to display bottom up
     #while i < len(bids):
@@ -74,7 +74,7 @@ def getMarketData():
     i = 0
     asks = []
     #print("ASKs -------------------------")
-    for x in btc_book['asks']:
+    for x in current_book['asks']:
         asks.append(x)
     while i < 15:     #only want 15 levels here
         textask.insert(INSERT,"\t\t"+asks[i]['amount']+"\t\t"+asks[i]['price']+"\n")
@@ -89,11 +89,12 @@ def getMarketData():
     #print(spread)
 
 def getAllBooks(list):
-    for x in list:
-            if x == 'btcusd':
-                url = get_book + x
-                r = (http.request('GET',url).data.decode('utf-8'))
-                symbol_obj = json.loads(r)
+    #for x in list:
+    #    if x == 'btcusd':
+    x = pairs_choice.get()
+    url = get_book + x
+    r = (http.request('GET',url).data.decode('utf-8'))
+    symbol_obj = json.loads(r)
     return symbol_obj
 
 def autoGetBook():
@@ -102,16 +103,13 @@ def autoGetBook():
         time.sleep(5)
 
 if __name__=='__main__':
-<<<<<<< HEAD
     top = Tk()
-=======
     base_url = "https://api.gemini.com/v1/symbols"
     r_symbols = http.request('GET', base_url)
     pairs = r_symbols.data.decode('utf-8')
     symbol_obj = json.loads(pairs)
     pairs_t = tuple(symbol_obj)
-    top = tkinter.Tk()
->>>>>>> cf6eee42fc0948407c2fa60df01995d397f137cc
+    #top = tkinter.Tk()
     top.configure(bg='black',borderwidth = 0, relief = FLAT, highlightcolor='black')
     top.title("Gemini Order Book")
     pairs_choice = Spinbox(top, state=NORMAL, values=pairs_t)
