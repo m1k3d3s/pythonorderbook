@@ -29,7 +29,7 @@ def check_updown(price,old_price):
     if price > old_price:
         arrow = u"\u2191"
     elif price == old_price:
-        arrow = ""
+        arrow = "<->"
     else:
         arrow = u"\u2193"
     return arrow
@@ -80,12 +80,15 @@ def getMarketData():
         textask.insert(INSERT,"\t\t"+asks[i]['amount']+"\t\t"+asks[i]['price']+"\n")
         i += 1
     textask.config(state=DISABLED)
-
+    
+    global old_value
     spread = float(asks[0]['price']) - float(bids[-1]['price'])
-    spread_val = "Spread: " + str(spread)
+    arrow = check_updown(spread, old_value)
+    spread_val = arrow + " Spread: " + str(spread)
     textspread.insert(INSERT, spread_val)
     textspread.config(state=DISABLED)
     texttime.config(state=DISABLED)
+    old_value = spread
     #print(spread)
 
 def getAllBooks(list):
