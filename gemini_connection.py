@@ -8,7 +8,7 @@ try:
 except ImportError:
     # for Python3
     from tkinter import *
-    tk=Tk()
+    #tk=Tk()
 import urllib3.contrib.pyopenssl
 import certifi
 import collections
@@ -89,8 +89,6 @@ def getMarketData():
     #print(spread)
 
 def getAllBooks(list):
-    #for x in list:
-    #    if x == 'btcusd':
     x = pairs_choice.get()
     url = get_book + x
     r = (http.request('GET',url).data.decode('utf-8'))
@@ -103,17 +101,16 @@ def autoGetBook():
         time.sleep(5)
 
 if __name__=='__main__':
-    top = Tk()
     base_url = "https://api.gemini.com/v1/symbols"
     r_symbols = http.request('GET', base_url)
     pairs = r_symbols.data.decode('utf-8')
     symbol_obj = json.loads(pairs)
     symbol_obj = [x.upper() for x in symbol_obj]
     pairs_t = tuple(symbol_obj)
-    #top = tkinter.Tk()
+    top = Tk()
     top.title("Gemini Order Book")
     top.configure(bg='black',borderwidth = 0, relief = FLAT, highlightcolor='black')
-    pairs_choice = Spinbox(top, state=NORMAL, values=pairs_t)
+    pairs_choice = Spinbox(top, state="readonly", justify=CENTER , values=pairs_t)
     refresh = Button(top, text="Refresh", background = 'black', command=getMarketData)
     textspread=Text(top, width=30, height=1, background='black',foreground='white')
     texttime=Text(top, width=30, height=1, background ='black', foreground='red')
