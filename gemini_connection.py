@@ -99,9 +99,8 @@ def getAllBooks(list):
     return symbol_obj
 
 def autoGetBook():
-    while(True):
-        getMarketData()
-        time.sleep(5)
+    getMarketData()
+    time.sleep(5)
 
 if __name__=='__main__':
     base_url = "https://api.gemini.com/v1/symbols"
@@ -110,22 +109,31 @@ if __name__=='__main__':
     symbol_obj = json.loads(pairs)
     symbol_obj = [x.upper() for x in symbol_obj]
     pairs_t = tuple(symbol_obj)
-    top = Tk()
-    top.title("Gemini Order Book")
-    top.configure(bg='black',borderwidth = 0, relief = FLAT, highlightcolor='black')
-    pairs_choice = Spinbox(top, state="readonly", justify=CENTER , values=pairs_t)
-    refresh = Button(top, text="Refresh", background = 'black', command=getMarketData)
-    textspread=Text(top, width=30, height=1, background='black',foreground='white')
-    texttime=Text(top, width=30, height=1, background ='black', foreground='red')
-    textbid=Text(top, width=60, height=15, borderwidth = 0, background ='black', foreground='green')
-    textask=Text(top, width=60, height=15, borderwidth = 0, background ='black', foreground='red')
-    pairs_choice.pack(side=TOP)
-    refresh.pack(side=TOP)
-    texttime.pack()
-    textbid.pack(side=TOP)
-    textspread.pack()
-    textask.pack(side=BOTTOM)
+    master = Tk()
+    master.title("Gemini Order Book")
+    master.configure(bg='black',borderwidth = 0, relief = FLAT, highlightcolor='black')
+    pairs_choice = Spinbox(master, width=10, state="readonly", values=pairs_t)
+    refresh = Button(master, text="Refresh", width=8, background = 'black', command=getMarketData)
+    textspread=Text(master, width=30, height=1, background='black',foreground='white')
+    texttime=Text(master, width=30, height=1, background ='black', foreground='red')
+    textbid=Text(master, width=60, height=15, borderwidth = 0, background ='black', foreground='green')
+    textask=Text(master, width=60, height=15, borderwidth = 0, background ='black', foreground='red')
+   
+    pairs_choice.grid(row=0, columnspan=1, rowspan=1)
+    refresh.grid(row=1)
+    texttime.grid(row=2)
+    textbid.grid(row=3)
+    textspread.grid(row=4)
+    textask.grid(row=5)
+    
+    #pairs_choice.pack(side=TOP)
+    #refresh.pack(side=TOP)
+    #texttime.pack()
+    #textbid.pack(side=TOP)
+    #textspread.pack()
+    #textask.pack(side=BOTTOM)
+    
     #t = Timer(5.0, autoGetBook) 
     #t.start()
-    top.mainloop()
+    master.mainloop()
     
