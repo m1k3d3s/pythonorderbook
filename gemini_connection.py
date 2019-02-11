@@ -109,6 +109,7 @@ if __name__=='__main__':
     symbol_obj = json.loads(pairs)
     symbol_obj = [x.upper() for x in symbol_obj]
     pairs_t = tuple(symbol_obj)
+    
     master = Tk()
     master.title("Gemini Order Book")
     master.configure(bg='black',borderwidth = 0, relief = FLAT, highlightcolor='black')
@@ -125,13 +126,6 @@ if __name__=='__main__':
     textbid.grid(row=3)
     textspread.grid(row=4)
     textask.grid(row=5)
-    
-    #pairs_choice.pack(side=TOP)
-    #refresh.pack(side=TOP)
-    #texttime.pack()
-    #textbid.pack(side=TOP)
-    #textspread.pack()
-    #textask.pack(side=BOTTOM)
     
     #t = Timer(5.0, autoGetBook) 
     #t.start()
