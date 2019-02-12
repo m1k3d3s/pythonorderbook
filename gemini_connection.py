@@ -113,15 +113,18 @@ if __name__=='__main__':
     master = Tk()
     master.title("Gemini Order Book")
     master.configure(bg='black',borderwidth = 0, relief = FLAT, highlightcolor='black')
-    pairs_choice = Spinbox(master, width=10, state="readonly", values=pairs_t)
-    refresh = Button(master, text="Refresh", width=8, background = 'black', command=getMarketData)
+    cFrame = Frame(master)
+    cFrame.grid(row=0, column=0)
+    pairs_choice = Spinbox(cFrame, width=10, state="readonly", values=pairs_t)
+    refresh = Button(cFrame, text="Refresh", width=8, background = 'black', command=getMarketData)
     textspread=Text(master, width=30, height=1, background='black',foreground='white')
     texttime=Text(master, width=30, height=1, background ='black', foreground='red')
     textbid=Text(master, width=60, height=15, borderwidth = 0, background ='black', foreground='green')
     textask=Text(master, width=60, height=15, borderwidth = 0, background ='black', foreground='red')
-   
+
     pairs_choice.grid(row=0, columnspan=1, rowspan=1)
-    refresh.grid(row=1)
+    refresh.grid(row=0, column=1)
+
     texttime.grid(row=2)
     textbid.grid(row=3)
     textspread.grid(row=4)
