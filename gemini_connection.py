@@ -121,14 +121,16 @@ if __name__=='__main__':
     texttime=Text(master, width=30, height=1, background ='black', foreground='white')
     textbid=Text(master, width=60, height=15, borderwidth = 0, background ='black', foreground='green')
     textask=Text(master, width=60, height=15, borderwidth = 0, background ='black', foreground='red')
+    texttrades=Text(master, width=30, height=30, borderwidth = 0, background = 'black', foreground='white')
 
     pairs_choice.grid(row=0, columnspan=1, rowspan=1)
     refresh.grid(row=0, column=1)
 
     texttime.grid(row=2)
     textbid.grid(row=3)
-    textspread.grid(row=4)
-    textask.grid(row=5)
+    textspread.grid(row=4, sticky=N)
+    textask.grid(row=5, sticky=N)
+    texttrades.grid(row=3, rowspan=3, column=2, sticky=N+S+W)
     
     #t = Timer(5.0, autoGetBook) 
     #t.start()
