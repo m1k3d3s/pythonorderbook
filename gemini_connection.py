@@ -105,11 +105,12 @@ def autoGetBook():
 
 def getTrades():
     texttrades.config(state=NORMAL)
+    texttrades.delete(1.0,END)
     base_url = "https://api.gemini.com/v1/trades/"
     x = pairs_choice.get()
     t_rades = http.request('GET', base_url + x)
     trades = t_rades.data.decode('utf=8')
-    trades_obj = jxon.loads(trades)
+    trades_obj = json.loads(trades)
     trades_t = tuple(trades_obj)
     texttrades.insert(INSERT, trades_t)
     texttrades.config(state=DISABLED)
