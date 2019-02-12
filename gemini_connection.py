@@ -102,6 +102,9 @@ def autoGetBook():
     getMarketData()
     time.sleep(5)
 
+def getTrades():
+    pass
+
 if __name__=='__main__':
     base_url = "https://api.gemini.com/v1/symbols"
     r_symbols = http.request('GET', base_url)
