@@ -90,6 +90,7 @@ def getMarketData():
     texttime.config(state=DISABLED)
     old_value = spread
     #print(spread)
+    getTrades()
 
 def getAllBooks(list):
     x = pairs_choice.get()
@@ -103,7 +104,15 @@ def autoGetBook():
     time.sleep(5)
 
 def getTrades():
-    pass
+    texttrades.config(state=NORMAL)
+    base_url = "https://api.gemini.com/v1/trades/"
+    x = pairs_choice.get()
+    t_rades = http.request('GET', base_url + x)
+    trades = t_rades.data.decode('utf=8')
+    trades_obj = jxon.loads(trades)
+    trades_t = tuple(trades_obj)
+    texttrades.insert(INSERT, trades_t)
+    texttrades.config(state=DISABLED)
 
 if __name__=='__main__':
     base_url = "https://api.gemini.com/v1/symbols"
