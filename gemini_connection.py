@@ -118,7 +118,7 @@ if __name__=='__main__':
     pairs_choice = Spinbox(cFrame, width=10, state="readonly", values=pairs_t)
     refresh = Button(cFrame, text="Refresh", width=8, background = 'black', command=getMarketData)
     textspread=Text(master, width=30, height=1, background='black',foreground='white')
-    texttime=Text(master, width=30, height=1, background ='black', foreground='red')
+    texttime=Text(master, width=30, height=1, background ='black', foreground='white')
     textbid=Text(master, width=60, height=15, borderwidth = 0, background ='black', foreground='green')
     textask=Text(master, width=60, height=15, borderwidth = 0, background ='black', foreground='red')
 
