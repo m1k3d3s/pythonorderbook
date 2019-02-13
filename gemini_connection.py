@@ -90,7 +90,7 @@ def getMarketData():
     texttime.config(state=DISABLED)
     old_value = spread
     #print(spread)
-    getTrades()
+    #getTrades()
 
 def getAllBooks(list):
     x = pairs_choice.get()
@@ -104,6 +104,7 @@ def autoGetBook():
     time.sleep(5)
 
 def getTrades():
+    i=0
     texttrades.config(state=NORMAL)
     texttrades.delete(1.0,END)
     base_url = "https://api.gemini.com/v1/trades/"
@@ -112,7 +113,9 @@ def getTrades():
     trades = t_rades.data.decode('utf=8')
     trades_obj = json.loads(trades)
     trades_t = tuple(trades_obj)
-    texttrades.insert(INSERT, trades_t)
+    while i < len(trades_t):
+        texttrades.insert(INSERT, '  '+trades_t[i]['price']+'\n')
+        i += 1
     texttrades.config(state=DISABLED)
 
 if __name__=='__main__':
@@ -129,12 +132,12 @@ if __name__=='__main__':
     cFrame = Frame(master)
     cFrame.grid(row=0, column=0)
     pairs_choice = Spinbox(cFrame, width=10, state="readonly", values=pairs_t)
-    refresh = Button(cFrame, text="Refresh", width=8, background = 'black', command=getMarketData)
+    refresh = Button(cFrame, text="Refresh", width=8, background = 'black', command=lambda:[getMarketData(),getTrades()])
     textspread=Text(master, width=30, height=1, background='black',foreground='white')
     texttime=Text(master, width=30, height=1, background ='black', foreground='white')
     textbid=Text(master, width=60, height=15, borderwidth = 0, background ='black', foreground='green')
     textask=Text(master, width=60, height=15, borderwidth = 0, background ='black', foreground='red')
-    texttrades=Text(master, width=30, height=30, borderwidth = 0, background = 'black', foreground='white')
+    texttrades=Text(master, width=11, height=20, borderwidth = 0, background = 'black', foreground='white')
 
     pairs_choice.grid(row=0, columnspan=1, rowspan=1)
     refresh.grid(row=0, column=1)
