@@ -115,7 +115,7 @@ def getTrades():
     trades = t_rades.data.decode('utf=8')
     trades_obj = json.loads(trades)
     trades_t = tuple(trades_obj)
-    while i < len(trades_t):
+    while i < len(trades_t) - 20 :
         texttradeamount.insert(INSERT, '   '+trades_t[i]['amount']+'\n')
         texttrades.insert(INSERT, '   '+trades_t[i]['price']+'\n')
         i += 1
