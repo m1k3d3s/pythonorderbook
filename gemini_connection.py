@@ -134,6 +134,7 @@ if __name__=='__main__':
     master = Tk()
     master.title("Gemini Order Book")
     master.configure(bg='black',borderwidth = 0, relief = FLAT, highlightcolor='black')
+    master.resizable(0, 0)
     cFrame = Frame(master)
     cFrame.grid(row=0, column=0)
     pairs_choice = Spinbox(cFrame, width=10, state="readonly", values=pairs_t)
