@@ -106,7 +106,9 @@ def autoGetBook():
 def getTrades():
     i=0
     texttrades.config(state=NORMAL)
+    texttradeamount.config(state=NORMAL)
     texttrades.delete(1.0,END)
+    texttradeamount.delete(1.0,END)
     base_url = "https://api.gemini.com/v1/trades/"
     x = pairs_choice.get()
     t_rades = http.request('GET', base_url + x)
@@ -114,11 +116,11 @@ def getTrades():
     trades_obj = json.loads(trades)
     trades_t = tuple(trades_obj)
     while i < len(trades_t):
-        texttrades.insert(INSERT, '   '+trades_t[i]['amount']+'  '+trades_t[i]['price']+'\n')
-        texttrades.tag_add("price_color", "1.15","1.20")
-        texttrades.tag_config("price_color",background="black", foreground="cyan")
+        texttradeamount.insert(INSERT, '   '+trades_t[i]['amount']+'\n')
+        texttrades.insert(INSERT, '   '+trades_t[i]['price']+'\n')
         i += 1
     texttrades.config(state=DISABLED)
+    texttradeamount.config(state=DISABLED)
 
 if __name__=='__main__':
     base_url = "https://api.gemini.com/v1/symbols"
@@ -137,9 +139,10 @@ if __name__=='__main__':
     refresh = Button(cFrame, text="Refresh", width=8, background = 'black', command=lambda:[getMarketData(),getTrades()])
     textspread=Text(master, width=30, height=1, background='black',foreground='white')
     texttime=Text(master, width=30, height=1, background ='black', foreground='white')
-    textbid=Text(master, width=60, height=15, borderwidth = 0, background ='black', foreground='green')
-    textask=Text(master, width=60, height=15, borderwidth = 0, background ='black', foreground='red')
-    texttrades=Text(master, width=30, height=20, borderwidth = 0, background = 'black', foreground='white')
+    textbid=Text(master, width=60, height=15, highlightthickness=0, borderwidth = 0, background ='black', foreground='green')
+    textask=Text(master, width=60, height=15, highlightthickness=0, borderwidth = 0, background ='black', foreground='red')
+    texttrades=Text(master, width=15, height=20, highlightthickness=0, borderwidth = 0, background = 'black', foreground='white')
+    texttradeamount=Text(master, width=15, height=20, highlightthickness=0, borderwidth = 0, background = 'black', foreground='cyan')
 
     pairs_choice.grid(row=0, columnspan=1, rowspan=1)
     refresh.grid(row=0, column=1)
@@ -148,7 +151,8 @@ if __name__=='__main__':
     textbid.grid(row=3)
     textspread.grid(row=4, sticky=N)
     textask.grid(row=5, sticky=N)
-    texttrades.grid(row=3, rowspan=3, column=2, sticky=N+S+W)
+    texttradeamount.grid(row=3, rowspan=3, column=2, sticky=N+S+W)
+    texttrades.grid(row=3, rowspan=3, column=3, sticky=N+S+W)
     
     #t = Timer(5.0, autoGetBook) 
     #t.start()
