@@ -114,7 +114,9 @@ def getTrades():
     trades_obj = json.loads(trades)
     trades_t = tuple(trades_obj)
     while i < len(trades_t):
-        texttrades.insert(INSERT, '  '+trades_t[i]['price']+'\n')
+        texttrades.insert(INSERT, '   '+trades_t[i]['amount']+'  '+trades_t[i]['price']+'\n')
+        texttrades.tag_add("price_color", "1.15","1.20")
+        texttrades.tag_config("price_color",background="black", foreground="cyan")
         i += 1
     texttrades.config(state=DISABLED)
 
@@ -137,7 +139,7 @@ if __name__=='__main__':
     texttime=Text(master, width=30, height=1, background ='black', foreground='white')
     textbid=Text(master, width=60, height=15, borderwidth = 0, background ='black', foreground='green')
     textask=Text(master, width=60, height=15, borderwidth = 0, background ='black', foreground='red')
-    texttrades=Text(master, width=11, height=20, borderwidth = 0, background = 'black', foreground='white')
+    texttrades=Text(master, width=30, height=20, borderwidth = 0, background = 'black', foreground='white')
 
     pairs_choice.grid(row=0, columnspan=1, rowspan=1)
     refresh.grid(row=0, column=1)
