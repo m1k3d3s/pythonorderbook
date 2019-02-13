@@ -101,6 +101,7 @@ def getAllBooks(list):
 
 def autoGetBook():
     getMarketData()
+    getTrades()
     time.sleep(5)
 
 def getTrades():
@@ -156,5 +157,7 @@ if __name__=='__main__':
     
     #t = Timer(5.0, autoGetBook) 
     #t.start()
+    getMarketData()
+    getTrades()
     master.mainloop()
     
