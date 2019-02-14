@@ -125,10 +125,11 @@ def getTrades():
     trades = t_rades.data.decode('utf=8')
     trades_obj = json.loads(trades)
     trades_t = tuple(trades_obj)
+    #print(trades_t)
     try:
         while i < len(trades_t) - 20 :    # removing 20 execution prints to fit nicely in window.
-            texttradeamount.insert(INSERT, '   '+trades_t[i]['amount']+'\n')
-            texttrades.insert(INSERT, '   '+trades_t[i]['price']+'\n')
+            texttradeamount.insert(INSERT, trades_t[i]['type'][0:1].upper()+' '+trades_t[i]['amount']+'\n')
+            texttrades.insert(INSERT, ' '+trades_t[i]['price']+'\n')
             i += 1
     except:
         texttrades.insert(INSERT, "\t\t"+"N/A"+"\t\t"+"\n")
