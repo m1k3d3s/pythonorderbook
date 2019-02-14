@@ -54,7 +54,7 @@ def getMarketData():
     r = http.request('GET', get_book)
     request_symbols = r_symbols.data.decode('utf-8')
     symbol_obj = json.loads(request_symbols)
-    print(symbol_obj)
+    #print(symbol_obj)
     current_book = getAllBooks(symbol_obj)
     #print(current_book.values())
     i = 0
