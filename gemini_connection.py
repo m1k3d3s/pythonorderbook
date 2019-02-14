@@ -65,9 +65,12 @@ def getMarketData():
     bids = bids[14::-1]      # reverse the bids to display bottom up
     #while i < len(bids):
     while i <= 14:    #only want 15 levels here
-        #textbid.insert(INSERT,bids[i]['price']+"\n")
-        #textbid.insert(INSERT,bids[i]['timestamp']+" "+bids[i]['amount']+" "+bids[i]['price']+"\n")
-        textbid.insert(INSERT,"\t\t"+bids[i]['amount']+"\t\t"+bids[i]['price']+"\n")
+        try:
+            #textbid.insert(INSERT,bids[i]['price']+"\n")
+            #textbid.insert(INSERT,bids[i]['timestamp']+" "+bids[i]['amount']+" "+bids[i]['price']+"\n")
+            textbid.insert(INSERT,"\t\t"+bids[i]['amount']+"\t\t"+bids[i]['price']+"\n")
+        except IndexError:
+            textask.insert(INSERT,"\t\t"+"N/A"+"\t\t"+"\n")
         i += 1
     textbid.config(state=DISABLED)
 
@@ -77,7 +80,10 @@ def getMarketData():
     for x in current_book['asks']:
         asks.append(x)
     while i < 15:     #only want 15 levels here
-        textask.insert(INSERT,"\t\t"+asks[i]['amount']+"\t\t"+asks[i]['price']+"\n")
+        try:
+            textask.insert(INSERT,"\t\t"+asks[i]['amount']+"\t\t"+asks[i]['price']+"\n")
+        except IndexError:
+            textask.insert(INSERT,"\t\t"+"N/A"+"\t\t"+"\n")
         i += 1
     textask.config(state=DISABLED)
     
@@ -85,7 +91,10 @@ def getMarketData():
     spread = float(asks[0]['price']) - float(bids[-1]['price'])
     arrow = check_updown(spread, old_value)
     spread_val = arrow + " Spread: " + str(spread)
-    textspread.insert(INSERT, spread_val)
+    try:
+        textspread.insert(INSERT, spread_val)
+    except:
+        textspread.insert(INSERT, "N/A")
     textspread.config(state=DISABLED)
     texttime.config(state=DISABLED)
     old_value = spread
@@ -116,10 +125,13 @@ def getTrades():
     trades = t_rades.data.decode('utf=8')
     trades_obj = json.loads(trades)
     trades_t = tuple(trades_obj)
-    while i < len(trades_t) - 20 :
-        texttradeamount.insert(INSERT, '   '+trades_t[i]['amount']+'\n')
-        texttrades.insert(INSERT, '   '+trades_t[i]['price']+'\n')
-        i += 1
+    try:
+        while i < len(trades_t) - 20 :    # removing 20 execution prints to fit nicely in window.
+            texttradeamount.insert(INSERT, '   '+trades_t[i]['amount']+'\n')
+            texttrades.insert(INSERT, '   '+trades_t[i]['price']+'\n')
+            i += 1
+    except:
+        texttrades.insert(INSERT, "\t\t"+"N/A"+"\t\t"+"\n")
     texttrades.config(state=DISABLED)
     texttradeamount.config(state=DISABLED)
 
