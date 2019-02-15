@@ -143,6 +143,7 @@ if __name__=='__main__':
     symbol_obj = json.loads(pairs)
     symbol_obj = [x.upper() for x in symbol_obj]
     pairs_t = tuple(symbol_obj)
+    choice = 0
     
     master = Tk()
     master.title("Gemini Order Book")
@@ -158,6 +159,7 @@ if __name__=='__main__':
     textask=Text(master, width=60, height=15, highlightthickness=0, borderwidth = 0, background ='black', foreground='red')
     texttrades=Text(master, width=15, height=20, highlightthickness=0, borderwidth = 0, background = 'black', foreground='white')
     texttradeamount=Text(master, width=15, height=20, highlightthickness=0, borderwidth = 0, background = 'black', foreground='cyan')
+    checkbutton_autorefresh=Checkbutton(master, variable=choice, text="Enable AR")
 
     pairs_choice.grid(row=0, columnspan=1, rowspan=1)
     refresh.grid(row=0, column=1)
@@ -168,6 +170,7 @@ if __name__=='__main__':
     textask.grid(row=5, sticky=N)
     texttradeamount.grid(row=3, rowspan=3, column=2, sticky=N+S+W)
     texttrades.grid(row=3, rowspan=3, column=3, sticky=N+S+W)
+    checkbutton_autorefresh.grid(row=0, column=3, sticky=E)
     
     #t = Timer(5.0, autoGetBook) 
     #t.start()
